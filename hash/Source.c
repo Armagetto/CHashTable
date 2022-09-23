@@ -1,13 +1,9 @@
 #include "header.h"
 
-
-int main() {
-	
-	int c;
-
+int main(int argc,char* argv[]) {
+	unsigned int operation_status = 0;
 	initialize_table();
 	print_table();
-
 
 	user david = { "david",16 };
 	user ron = { "ron",11 };
@@ -42,5 +38,17 @@ int main() {
 		printf("\nnot found");
 	}
 
-	if (scanf_s("%d", &c) == NULL) { return 0; }
+
+
+
+	operation_status = 1;
+
+	if (operation_status == 0) {
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+	
 }
