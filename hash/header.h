@@ -16,8 +16,8 @@ typedef struct user {
 
 //hash table
 user* user_hash_table[TABLE_SIZE];
-int user_hash_table_size[TABLE_SIZE] = { 0 }; //this is to follow the size of a linked list before (so save time on some oparations)
-unsigned int user_hash_table_taken_size = 0;
+int user_hash_table_size[TABLE_SIZE] = { 0 }; //this is to follow the size of a linked lists (so save time on some oparations)
+//unsigned int user_hash_table_taken_size = 0;
 
 //user valid?
 unsigned int user_valid(user* user) {
@@ -90,9 +90,36 @@ int lookup_chain(user* root, char* name) {
 	return -1;
 }
 
-void delete_from_list(user* root,char* name) {
-	int index = lookup_chain(root,name);
+user* delete_from_list(user* root,char* name) {
+	if (root == NULL) {
+		return -1;
+	}
+		
+	//if ther's only one:
+	//int index = hash(name);
+	//int index = lookup_chain(root,name);
 
+	//if root is this
+	if (strcmp(root->name, name) == 0) {
+		user* to_remove = root;
+		root = root->next;
+		//update in hash
+		user_hash_table[hash(name)] = root;
+		//free(to_remove);
+		return root;
+	}
+
+
+	for (user* curr = root; curr->next != NULL ;curr = curr->next) {
+		if (strcmp(curr->next->name, name) == 0) {
+			user* to_remove = curr->next;
+			curr->next = curr->next->next;
+			free(to_remove);
+			return root;
+		}
+	}
+	
+	
 }
 
 //initialize table
@@ -165,13 +192,66 @@ int lookUp(char* name) {
 
 //delete
 user* remove_user(char* name) {
+		if (name == NULL) { return NULL; }
+		//gets where it is
+		int index = hash(name);
+		//if it's location isn't null
+		if (user_hash_table[index] != NULL) {
+			delete_from_list(user_hash_table[index], name);
+			return 1;
+		}
+		else {
+			return -1;
+		}
+	
+}
+
+
+
+/*
+
+if (user_hash_table_size[index] == 0) {
+	return -1;
+}
+if (user_hash_table_size[index] == 1) {
+	//remove from list
+	//delete(user_hash_table[index]); //not sure
+	user_hash_table[index] = NULL;
+	user_hash_table_size[index]--; //update size
+
+}
+
+*/
+
+
+/*
+user* remove_user(char* name) {
 	int index = lookUp(name);
 	if (index >= 0) {
-		user* temp = user_hash_table[index];
-		user_hash_table[index] = NULL;
-		return temp;
+		delete_from_list(user_hash_table[index],name);
+		return index;
 	}
 	else {
 		return NULL;
 	}
 }
+
+*/
+
+/*
+user* remove_user(char* name) {
+	if (name == NULL)
+		return -1;
+
+	int index = 0;
+	index = hash(name);
+	if (index >= 0) {
+		delete_from_list(user_hash_table[index],name);
+		return index;
+	}
+	else {
+		return NULL;
+	}
+}
+
+*/

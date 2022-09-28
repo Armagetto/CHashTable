@@ -25,9 +25,12 @@ int main(int argc, char* argv[]) {
 	insert_table(&shimi);
 	print_table();
 	
+	remove_user("shimi");
+	print_table();
+
 
 	//search test
-	if (lookUp("shimi1") != -1) {
+	if (lookUp("david") != -1) {
 		printf("\nfound\n");
 	}
 	else
