@@ -16,6 +16,7 @@ typedef struct user {
 
 //hash table
 user* user_hash_table[TABLE_SIZE];
+int user_hash_table_size[TABLE_SIZE] = { 0 }; //this is to follow the size of a linked list before (so save time on some oparations)
 unsigned int user_hash_table_taken_size = 0;
 
 //user valid?
@@ -48,6 +49,7 @@ int chain_list(user** root, user* new_user) {
 		curr = curr->next;
 	}
 	curr->next = new_new_user;
+	return 1;
 }
 
 
@@ -88,6 +90,11 @@ int lookup_chain(user* root, char* name) {
 	return -1;
 }
 
+void delete_from_list(user* root,char* name) {
+	int index = lookup_chain(root,name);
+
+}
+
 //initialize table
 void initialize_table() {
 	for (int i = 0; i < TABLE_SIZE; i++) {
@@ -115,13 +122,17 @@ int insert_table(user* user) {
 	if (!user_valid(user)) { return 0; }
 
 	int index = hash(user->name);
+	
 
 	if (user_hash_table[index] != NULL) {
-		chain_list(user_hash_table,user);
+		if (chain_list(user_hash_table, user) != 0) {
+			user_hash_table_size[index]++;
+		}
 		return 0;
 	}
 	else {
 		user_hash_table[index] = user;
+		user_hash_table_size[index]++;
 		return 1;
 	}
 }
