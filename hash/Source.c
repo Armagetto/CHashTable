@@ -1,21 +1,30 @@
 #include "header.h"
 
-int main(int argc,char* argv[]) {
+int main(int argc, char* argv[]) {
 	unsigned int operation_status = 0;
 	initialize_table();
 	print_table();
 
-	user david = { "david",16 };
-	user ron = { "ron",11 };
-	user amit = { "amit",17 };
-	user shimi = { "shimi",10 };
+	user david = { "david",16,NULL };
+	user ron = { "ron",11,NULL };
+	user amit = { "amit",17,NULL };
+	user shimi = { "shimi",10,NULL };
 
 	insert_table(&david);
+	print_table();
+
 	insert_table(&ron);
-	insert_table(&amit);
-	insert_table(&shimi);
 
 	print_table();
+
+
+	insert_table(&amit);
+	print_table();
+
+
+	insert_table(&shimi);
+	print_table();
+	
 
 
 	//search test
@@ -27,6 +36,7 @@ int main(int argc,char* argv[]) {
 		printf("\nnot found");
 	}
 
+	/*
 	remove_user("ron");
 	print_table();
 
@@ -37,6 +47,8 @@ int main(int argc,char* argv[]) {
 	{
 		printf("\nnot found");
 	}
+	
+	*/
 
 
 
@@ -50,5 +62,5 @@ int main(int argc,char* argv[]) {
 	{
 		return 1;
 	}
-	
+
 }

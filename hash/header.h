@@ -10,6 +10,7 @@
 typedef struct user {
 	char* name;
 	int age;
+	struct user* next;
 }user;
 
 
@@ -24,6 +25,45 @@ unsigned int user_valid(user* user) {
 	if (strlen(user->name) > MAX_NAME) { return 0; }
 	if (user->age > MAX_AGE || user->age <= 0) { return 0; }
 	return 1;
+}
+
+int chain_list(user** root, user* new_user) {
+	if (root == NULL)
+		return 0;
+	if (new_user == NULL)
+		return 0;
+
+	int age = new_user->age;
+	char* name = new_user->name;
+
+	//ini new user
+	user* new_new_user = (user*)malloc(sizeof(user));
+	new_new_user->age = age;
+	new_new_user->name = name;
+	new_new_user->next = NULL;
+
+
+	user* curr = *root;
+	while (curr->next != NULL) {
+		curr = curr->next;
+	}
+	curr->next = new_new_user;
+}
+
+
+int print_chain(user* root) {
+	if (root == NULL)
+		return 0;
+
+	user* curr = root;
+	while (curr->next != NULL) {
+		printf("%s\t",curr->name);
+		curr = curr->next;
+	}
+	if (curr != NULL) {
+		printf("%s\t", curr->name); //print last name
+	}
+	printf("\n");
 }
 
 //initialize table
@@ -41,7 +81,9 @@ int print_table() {
 			printf("%i\t---\n", i);
 		}
 		else {
-			printf("%i\t%s\n", i, user_hash_table[i]->name);
+			printf("%i\t", i);
+			print_chain(user_hash_table[i]);
+			//printf("%i\t%s\n", i, user_hash_table[i]->name);
 		}
 	}
 	printf("\n\n---END OF PRINT---\n\n");
@@ -51,7 +93,9 @@ int insert_table(user* user) {
 	if (!user_valid(user)) { return 0; }
 
 	int index = hash(user->name);
+
 	if (user_hash_table[index] != NULL) {
+		chain_list(user_hash_table,user);
 		return 0;
 	}
 	else {
