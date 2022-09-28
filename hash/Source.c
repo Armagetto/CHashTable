@@ -38,20 +38,6 @@ int main(int argc, char* argv[]) {
 		printf("\nnot found");
 	}
 
-	/*
-	remove_user("ron");
-	print_table();
-
-	if (lookUp("ron") != -1) {
-		printf("\nfound\n");
-	}
-	else
-	{
-		printf("\nnot found");
-	}
-	
-	*/
-
 
 
 
