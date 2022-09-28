@@ -18,9 +18,8 @@ typedef struct user {
 //hash table
 user* user_hash_table[TABLE_SIZE];
 int user_hash_table_size[TABLE_SIZE] = { 0 }; //this is to follow the size of a linked lists (so save time on some oparations)
-//unsigned int user_hash_table_taken_size = 0;
 
-//user valid?
+//user validation
 unsigned int user_valid(user* user) {
 	if (user == NULL) { return 0; }
 	if (user->name == NULL) { return 0; }
@@ -120,9 +119,7 @@ user* delete_from_list(user* root,char* name) {
 
 			return root;
 		}
-	}
-	
-	
+	}	
 }
 
 //initialize table
@@ -137,13 +134,13 @@ int print_table() {
 	printf("---NEW PRINT---\n\n");
 	for (int i = 0; i < TABLE_SIZE; i++) {
 		if (user_hash_table[i] == NULL) {
-			printf("%i\t---\n", i);
+			printf("%i|\t---\n", i);
 		}
 		else {
-			printf("%i\t", i);
+			printf("%i|\t", i);
 			print_chain(user_hash_table[i]);
-			
 		}
+		
 	}
 	printf("\n\n---END OF PRINT---\n\n");
 }
@@ -215,14 +212,11 @@ user* create_new_user(char* name, int age) {
 		return NULL;
 	}
 	
-
-	//crate new user
 	user* new_user = (user*)malloc(sizeof(user));
 	if (new_user == NULL) {
 		return NULL;
 	}
 		
-
 	new_user->next = NULL;
 	new_user->name = name;
 	new_user->age = age;
