@@ -26,9 +26,8 @@ int main(int argc, char* argv[]) {
 	print_table();
 	
 
-
 	//search test
-	if (lookUp("ron") != -1) {
+	if (lookUp("david") != -1) {
 		printf("\nfound\n");
 	}
 	else

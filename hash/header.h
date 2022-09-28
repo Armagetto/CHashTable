@@ -66,6 +66,28 @@ int print_chain(user* root) {
 	printf("\n");
 }
 
+int lookup_chain(user* root, char* name) {
+	if (root == NULL)
+		return -1;
+	int index = 0;
+
+	user* curr = root;
+	while (curr->next != NULL) {
+		index++;
+		if (strcmp(curr->name, name) == 0) {
+			return index;
+		}
+		curr = curr->next;
+	}
+	if (curr != NULL) {
+		index++;
+		if (strcmp(curr->name, name) == 0) {
+			return index;
+		}
+	}
+	return -1;
+}
+
 //initialize table
 void initialize_table() {
 	for (int i = 0; i < TABLE_SIZE; i++) {
@@ -119,13 +141,11 @@ unsigned int hash(char* name) {
 //table lookUp
 int lookUp(char* name) {
 	if (name == NULL) { return NULL; }
-
+	int chain_result = 0;
 	int index = hash(name);
 
 	if (user_hash_table[index] != NULL) {
-		if (strcmp(user_hash_table[index]->name, name) == 0) {
-			return index;
-		}
+		return lookup_chain(user_hash_table[index], name);
 	}
 	else {
 		return -1;
