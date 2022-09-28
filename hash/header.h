@@ -1,6 +1,7 @@
 #pragma once
 #define _CTR_SECUTRE_NO_WARNINGS
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define MAX_NAME 256
@@ -39,6 +40,9 @@ int chain_list(user** root, user* new_user) {
 
 	//ini new user
 	user* new_new_user = (user*)malloc(sizeof(user));
+	if (new_new_user == NULL)
+		return NULL;
+
 	new_new_user->age = age;
 	new_new_user->name = name;
 	new_new_user->next = NULL;
@@ -95,18 +99,12 @@ user* delete_from_list(user* root,char* name) {
 		return -1;
 	}
 		
-	//if ther's only one:
-	//int index = hash(name);
-	//int index = lookup_chain(root,name);
-
 	//if root is this
 	if (strcmp(root->name, name) == 0) {
 		user* to_remove = root;
 		root = root->next;
 		//update in hash
 		user_hash_table[hash(name)] = root;
-		//if (to_remove !=NULL)
-			//free(to_remove);
 
 		return root;
 	}
@@ -117,8 +115,8 @@ user* delete_from_list(user* root,char* name) {
 			user* to_remove = curr->next;
 			curr->next = curr->next->next;
 
-		//	if (to_remove != NULL)
-			//	free(to_remove);
+			if (to_remove != NULL)
+				free(to_remove);
 
 			return root;
 		}
@@ -144,7 +142,7 @@ int print_table() {
 		else {
 			printf("%i\t", i);
 			print_chain(user_hash_table[i]);
-			//printf("%i\t%s\n", i, user_hash_table[i]->name);
+			
 		}
 	}
 	printf("\n\n---END OF PRINT---\n\n");
@@ -209,4 +207,24 @@ user* remove_user(char* name) {
 			return -1;
 		}
 	
+}
+
+//crate new user
+user* create_new_user(char* name, int age) {
+	if (name == NULL || age <= 0) {
+		return NULL;
+	}
+	
+
+	//crate new user
+	user* new_user = (user*)malloc(sizeof(user));
+	if (new_user == NULL) {
+		return NULL;
+	}
+		
+
+	new_user->next = NULL;
+	new_user->name = name;
+	new_user->age = age;
+	return new_user;
 }
