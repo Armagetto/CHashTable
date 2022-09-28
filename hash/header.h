@@ -44,7 +44,7 @@ int chain_list(user** root, user* new_user) {
 	new_new_user->next = NULL;
 
 
-	user* curr = *root;
+	user* curr = root[hash(name)];
 	while (curr->next != NULL) {
 		curr = curr->next;
 	}
@@ -105,7 +105,9 @@ user* delete_from_list(user* root,char* name) {
 		root = root->next;
 		//update in hash
 		user_hash_table[hash(name)] = root;
-		//free(to_remove);
+		//if (to_remove !=NULL)
+			//free(to_remove);
+
 		return root;
 	}
 
@@ -114,7 +116,10 @@ user* delete_from_list(user* root,char* name) {
 		if (strcmp(curr->next->name, name) == 0) {
 			user* to_remove = curr->next;
 			curr->next = curr->next->next;
-			free(to_remove);
+
+		//	if (to_remove != NULL)
+			//	free(to_remove);
+
 			return root;
 		}
 	}
@@ -166,13 +171,13 @@ int insert_table(user* user) {
 
 
 //hash function
-unsigned int hash(char* name) {
-	unsigned int temp = 0;
-	unsigned int i = 0;
+int hash(char* name) {
+	int temp = 0;
+	int i = 0;
 	for (; i < strlen(name); i++) {
 		temp += name[i];
 	}
-	return temp * i % TABLE_SIZE;
+	return (temp * i) % TABLE_SIZE;
 }
 
 
