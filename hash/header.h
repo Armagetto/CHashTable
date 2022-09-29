@@ -148,6 +148,7 @@ int print_table() {
 int insert_table(user* user) {
 	if (!user_valid(user)) { return 0; }
 
+	
 	int index = hash(user->name);
 	
 
@@ -222,3 +223,9 @@ user* create_new_user(char* name, int age) {
 	new_user->age = age;
 	return new_user;
 }
+
+/*
+char temp_name[MAX_NAME] = { NULL };
+	strcpy_s(temp_name,sizeof(temp_name), user->name);
+
+*/

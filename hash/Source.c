@@ -3,77 +3,78 @@
 int main(int argc, char* argv[]) {
 	initialize_table();
 	
-	//test
-	user a = { "a",16,NULL };
-	user b = { "b",16,NULL };
-	user c = { "c",16,NULL };
-	user d = { "d",16,NULL };
-	user e = { "e",16,NULL };
-	user f = { "f",16,NULL };
-	user g = { "g",16,NULL };
-	user h = { "h",16,NULL };
-	user i = { "i",16,NULL };
-	user j = { "j",16,NULL };
+	FILE* fpointer;
+	fopen_s(&fpointer, "data.txt", "r");
+	if (fpointer == NULL) {
+		return 0;
+	}
 	
-	insert_table(&a);
-	insert_table(&b);
-	insert_table(&c);
-	insert_table(&d);
-	insert_table(&e);
-	insert_table(&f);
-	insert_table(&g);
-	insert_table(&h);
-	insert_table(&i);
-	insert_table(&j);
+	char line[21];
+	char* real_line;
+	user* new_user;
+
+ while (fgets(line, sizeof(line), fpointer)) {
+
+	 fscanf_s(fpointer,"%s",line,_countof(line));
 	
+	 real_line = (char*)malloc(sizeof(line));
+	 if (real_line == NULL) {
+		 return 0;
+	 }
+	 strcpy_s(real_line,sizeof(line),line);
+	 puts(real_line);
+	 new_user = (user*)malloc(sizeof(user));
+	 if (new_user == NULL) {
+		 return 0;
+	 }
+	 new_user->age = 10;
+	 new_user->name = real_line;
+	 new_user->next = NULL;
+
+	 insert_table(new_user);
+    }
+
+	
+	
+
 	print_table();
+
+
+
+	fclose(fpointer);
+
+	return 0;
 }
 
-//for argv,argc
-
 /*
-//printing table 
+while (!feof(fpointer)) {
+		fgets(string, 10, fpointer);
+		token = strtok_s(string,"\n", &token);
+		puts(token);
 
-if (strcmp(argv[1], "print") == 0)
-	{
-		print_table();
+		new_user = (user*)malloc(sizeof(user));
+		if (new_user == NULL) {
+			return 0;
+		}
+		new_user->age = rand() % 99 + 1;
+		new_user->name = token;
+		new_user->next = NULL;
+		insert_table(new_user);
+		new_user = NULL;
 	}
+
 
 */
 
 /*
-if (argc > 2) {
+* fgets(string, 10, fpointer);
+	token = strtok_s(string, "\n", &tempo);
+		//puts(token);
+*/
 
-		//adding new user
-		if (strcmp(argv[1],"add") == 0) {
-			user* new_user = create_new_user(argv[2], atoi(argv[3]));
-				if (new_user != NULL) {
-					insert_table(new_user);
-					printf("User %s(%d) added! ", new_user->name, new_user->age);
-					print_table();
-				}
-				else
-				{
-					printf("Adding user failed\n");
-				}
-
-
+/*
+if (fscanf_s("%s", string) == NULL) {
+			return 0;
 		}
-		else if (strcmp(argv[1], "delete") == 0)
-		{
-
-		}
-
-
-	//user david = { "david",16,NULL };
-
-
-
-	return 1;
-	}
-	else {
-		printf("Too few argumants, try again");
-		return 0;
-	}
 
 */
