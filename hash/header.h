@@ -1,4 +1,5 @@
-#pragma once
+#ifndef HEADER
+#define HEADER
 #define _CTR_SECUTRE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
@@ -224,8 +225,4 @@ user* create_new_user(char* name, int age) {
 	return new_user;
 }
 
-/*
-char temp_name[MAX_NAME] = { NULL };
-	strcpy_s(temp_name,sizeof(temp_name), user->name);
-
-*/
+#endif // !HEADER
