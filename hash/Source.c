@@ -1,6 +1,7 @@
 #include "header.h"
 
 int main(int argc, char* argv[]) {
+	
 	initialize_table();
 	
 	FILE* fpointer;
@@ -9,10 +10,10 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 	
-	char line[21];
+	char line[MAX_NAME];
 	char* real_line;
 	user* new_user;
-
+	printf("Loading data into ram...\n");
  while (fgets(line, sizeof(line), fpointer)) {
 
 	 fscanf_s(fpointer,"%s",line,_countof(line));
@@ -22,59 +23,38 @@ int main(int argc, char* argv[]) {
 		 return 0;
 	 }
 	 strcpy_s(real_line,sizeof(line),line);
-	 puts(real_line);
+     
 	 new_user = (user*)malloc(sizeof(user));
 	 if (new_user == NULL) {
 		 return 0;
 	 }
-	 new_user->age = 10;
+	 new_user->age = rand()%99+1;
 	 new_user->name = real_line;
 	 new_user->next = NULL;
 
 	 insert_table(new_user);
     }
+	printf("\nDone!\nEnter what to look for (0 to exit): ");
 
+	char to_look_up[MAX_NAME] = {NULL};
+
+	scanf_s("%s", to_look_up, MAX_NAME);
+
+	while (strcmp(to_look_up,"0") != 0 || to_look_up != NULL)
+	{
+		if (lookUp(to_look_up) >= 0) {
+			printf("\n%s was found :)\n", to_look_up);
+		}
+		else
+		{
+			printf("\n%s was not found :(\n", to_look_up);
+		}
+		printf("\nEnter what to look for (0 to exit): ");
+		scanf_s("%s", to_look_up, MAX_NAME);
+	}
 	
-	
-
-	print_table();
-
-
 
 	fclose(fpointer);
 
 	return 0;
 }
-
-/*
-while (!feof(fpointer)) {
-		fgets(string, 10, fpointer);
-		token = strtok_s(string,"\n", &token);
-		puts(token);
-
-		new_user = (user*)malloc(sizeof(user));
-		if (new_user == NULL) {
-			return 0;
-		}
-		new_user->age = rand() % 99 + 1;
-		new_user->name = token;
-		new_user->next = NULL;
-		insert_table(new_user);
-		new_user = NULL;
-	}
-
-
-*/
-
-/*
-* fgets(string, 10, fpointer);
-	token = strtok_s(string, "\n", &tempo);
-		//puts(token);
-*/
-
-/*
-if (fscanf_s("%s", string) == NULL) {
-			return 0;
-		}
-
-*/

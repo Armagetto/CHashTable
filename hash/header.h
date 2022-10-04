@@ -6,7 +6,7 @@
 
 #define MAX_NAME 256
 #define MAX_AGE 140
-#define TABLE_SIZE 10
+#define TABLE_SIZE 100
 
 typedef struct user {
 	char* name;
@@ -154,13 +154,13 @@ int insert_table(user* user) {
 
 	if (user_hash_table[index] != NULL) {
 		if (chain_list(user_hash_table, user) != 0) {
-			user_hash_table_size[index]++;
+			
 		}
 		return 0;
 	}
 	else {
 		user_hash_table[index] = user;
-		user_hash_table_size[index]++;
+		
 		return 1;
 	}
 }
