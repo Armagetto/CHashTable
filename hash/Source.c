@@ -3,8 +3,16 @@
 
 int main(int argc, char* argv[]) {
 
-	
-	create_new_mul_dir("nano", 5);
+	//get working directory
+	char cwd[MAX_DIRECTORY_SIZE];
+	if (_getcwd(cwd, sizeof(cwd)) != NULL) {
+		printf("Working directory: %s\n", cwd);
+	}
+	else {
+		perror("getcwd() error");
+	}
+	//crate in working dirctory the paths
+	create_new_mul_dir("nano", TABLE_SIZE);
 
 	initialize_table();
 	

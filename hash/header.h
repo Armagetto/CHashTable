@@ -6,8 +6,9 @@
 #include <string.h>
 #include <direct.h>
 #define MAX_NAME 256
+#define MAX_DIRECTORY_SIZE 1024
 #define MAX_AGE 140
-#define TABLE_SIZE 100
+#define TABLE_SIZE 10
 
 typedef struct user {
 	char* name;
@@ -19,7 +20,6 @@ typedef struct user {
 //hash table
 user* user_hash_table[TABLE_SIZE];
 int user_hash_table_size[TABLE_SIZE] = { 0 }; //this is to follow the size of a linked lists (so save time on some oparations)
-
 
 
 //crate new dirctory
