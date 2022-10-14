@@ -1,12 +1,17 @@
 #include "header.h"
 
+
 int main(int argc, char* argv[]) {
+
 	
+	create_new_mul_dir("nano", 5);
+
 	initialize_table();
 	
 	FILE* fpointer;
 	fopen_s(&fpointer, "data.txt", "r");
 	if (fpointer == NULL) {
+		printf("File not found!\n");
 		return 0;
 	}
 	

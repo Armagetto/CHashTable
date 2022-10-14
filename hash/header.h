@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <direct.h>
 #define MAX_NAME 256
 #define MAX_AGE 140
 #define TABLE_SIZE 100
@@ -19,6 +19,46 @@ typedef struct user {
 //hash table
 user* user_hash_table[TABLE_SIZE];
 int user_hash_table_size[TABLE_SIZE] = { 0 }; //this is to follow the size of a linked lists (so save time on some oparations)
+
+
+
+//crate new dirctory
+int create_new_dir(char* new_dir_name) {
+	if (new_dir_name == NULL) {
+		return 0;
+	}
+	if (_mkdir(new_dir_name) == -1) {
+		printf("Failed!\n");
+		return -1;
+	}
+	else {
+		printf("Ok!\n");
+		return 1;
+	}
+}
+
+//new dirctory crator (loop)
+int create_new_mul_dir(char* new_dir_name, unsigned int number) {
+	if (new_dir_name == NULL) {
+		return -1;
+	}
+	char temp_name[MAX_NAME] = {'\0'};
+	for (int i = 0; i < number; i++) {
+		char* new_string = (char*)malloc(sizeof(char) * MAX_NAME + 1);
+		if (new_string == NULL) {
+			printf("malloc failed");
+			return -1;
+		}
+		strcpy(new_string, new_dir_name);
+		strcat(new_string, _itoa(i, temp_name, 10));
+		create_new_dir(new_string);
+		printf("%s crated!\n", new_string);
+		free(new_string);
+	}
+	return 1;
+}
+
+
 
 //user validation
 unsigned int user_valid(user* user) {
@@ -224,5 +264,9 @@ user* create_new_user(char* name, int age) {
 	new_user->age = age;
 	return new_user;
 }
+
+
+
+
 
 #endif // !HEADER
